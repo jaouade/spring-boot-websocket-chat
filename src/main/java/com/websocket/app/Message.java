@@ -5,8 +5,10 @@ import lombok.Data;
 import java.util.Date;
 @Data
 public class Message {
-    User user;
-    String content;
-    Date date;
+    private User user;
+    private String content;
+    private Date date;
+    private String chanel;
+
 
 }
