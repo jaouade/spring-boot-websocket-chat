@@ -110,24 +110,32 @@ function showUserStatus(user) {
     }
 
 }
+function formatDate(date) {
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    //return date.toLocaleDateString("en-US", options);
+    return date.toLocaleString();
 
+}
 function showMessage(message) {
     let $messages = $('#messages');
+    console.log(new Date(message.date).getFullYear());
+    let msg ='<blockquote class="blockquote">' +
+        '  <p class="mb-0">'+message.content+'</p>' +
+        '  <footer class="blockquote-footer"><small style="font-size: 10px;margin-top: -10px">'+formatDate(new Date(message.date))+'</small></footer>' +
+        '</blockquote>';
     if (localStorage.getItem("user") === message.user.username) {
         let messageBody = '<div class="outgoing_msg">' +
             '              <div class="sent_msg">' +
-            '                <p style="overflow-wrap: break-word;">' + message.content + '</p>' +
-            '                <span class="time_date">' + moment(new Date(message.date)).fromNow() + '</span> </div>' +
+                          msg+
             '            </div>';
         $messages.append(messageBody);
     } else {
         let messageBody = '<div class="incoming_msg">' +
-            '                        <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>' +
+            '                        <div class="incoming_msg_img" style="margin-top: 18px"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>' +
             '                        <div class="received_msg">' +
-            '                            <div class="received_withd_msg">' +
-            '                                <p style="overflow-wrap: break-word;">' + message.content + '</p>' +
-            '                                <span class="time_date">' + moment(new Date(message.date)).fromNow() + '</span></div>' +
-            '                        </div>' +
+            '                            <div class="received_withd_msg"><small style="height: fit-content;"><strong>' + message.user.username+
+            '                                </strong></small>'+msg +
+            '                        </div></div>' +
             '                    </div>'
         $messages.append(messageBody);
     }
